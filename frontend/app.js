@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000/api/session";
+const API_BASE = CONFIG.API_BASE;
 
 let currentSessionId = null;
 const output = document.getElementById("output");
