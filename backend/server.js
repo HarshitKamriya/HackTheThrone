@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const cors = require("cors");
+const dns = require("dns");
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 dotenv.config();
 connectDB();
