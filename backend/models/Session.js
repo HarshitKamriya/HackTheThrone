@@ -14,7 +14,8 @@ const sessionSchema = new mongoose.Schema(
     },
 
     endedAt: {
-      type: Date
+      type: Date,
+      expires: 60 * 60 * 24
     },
 
     status: {
