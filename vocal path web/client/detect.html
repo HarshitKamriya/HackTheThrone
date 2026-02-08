@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Object Detection – Vocal Path</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- YOLO via ONNX Runtime Web -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort.min.js"></script>
+</head>
+
+<body>
+    <div class="detect-page detect-page--camera-only">
+        <!-- Camera only: full-screen video + overlay -->
+        <section id="video-section" class="detect-video-full">
+            <video id="video" playsinline autoplay muted></video>
+            <canvas id="overlay"></canvas>
+            <div id="status-label" class="detect-status-minimal" aria-live="polite">
+                Loading camera…
+            </div>
+        </section>
+
+        <!-- Hidden: keep for app.js (double-tap + logic) -->
+        <div id="controls" class="detect-controls-hidden" aria-hidden="true">
+            <button id="start-btn">Start Guidance</button>
+            <button id="toggle-voice-btn" aria-pressed="true">Voice: On</button>
+            <div class="control-group">
+                <label for="confidence-slider">Confidence: <span id="confidence-value">0.50</span></label>
+                <input type="range" id="confidence-slider" min="0.2" max="0.9" step="0.05" value="0.5" />
+            </div>
+            <div class="control-group">
+                <label for="target-select">Target</label>
+                <select id="target-select">
+                    <option value="">Any</option>
+                    <option value="person">Person</option>
+                    <option value="chair">Chair</option>
+                    <option value="bottle">Bottle</option>
+                    <option value="cell phone">Phone</option>
+                    <option value="laptop">Laptop</option>
+                </select>
+            </div>
+            <p class="hint" id="voice-target-hint">Say object name for target.</p>
+        </div>
+
+        <!-- Footer: Two main action buttons -->
+        <footer class="detect-footer detect-footer--dual">
+            <button type="button" id="currency-detect-btn" class="detect-action-btn detect-action-btn--currency" aria-label="Currency Detection">
+                <span class="detect-action-icon">💵</span>
+                <span class="detect-action-label">Currency</span>
+            </button>
+            <button type="button" id="emergency-btn" class="detect-action-btn detect-action-btn--emergency" aria-label="Emergency Mode - Hold to activate">
+                <span class="detect-action-icon">🆘</span>
+                <span class="detect-action-label">Emergency</span>
+            </button>
+        </footer>
+
+        <!-- Emergency Mode Overlay -->
+        <div id="emergency-overlay" class="emergency-overlay" aria-hidden="true">
+            <div class="emergency-content">
+                <div class="emergency-pulse-ring"></div>
+                <div class="emergency-icon">🚨</div>
+                <h1 class="emergency-title">EMERGENCY ALERT</h1>
+                <p class="emergency-message">Help is on the way!</p>
+                <p class="emergency-sub">Notifying your emergency contacts...</p>
+                <div class="emergency-location">
+                    <span class="emergency-location-icon">📍</span>
+                    <span id="emergency-location-text">Fetching location...</span>
+                </div>
+                <button type="button" id="cancel-emergency-btn" class="emergency-cancel-btn">
+                    Cancel Emergency
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

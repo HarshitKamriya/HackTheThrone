@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>User Guide – Vocal Path</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="guide-page" id="guide-container">
+        <h1 class="guide-title">User Guide</h1>
+
+        <div class="guide-text">
+            <p>Welcome to <strong>VocalPath</strong> – your AI-powered vision assistant.</p>
+
+            <p><strong>🎯 Object Detection & Navigation</strong></p>
+            <p>
+                Tap <strong>"Start Detection"</strong> on the home screen.
+                The app will ask you to speak the object you want to find.
+                Say the name clearly (e.g., "chair", "bottle", "person").
+            </p>
+
+            <p>
+                Point your camera around the room. The app will detect objects
+                and guide you with voice instructions: <strong>left, right, forward</strong>,
+                and tell you how many steps away the target is.
+            </p>
+
+            <p><strong>💵 Currency Detection</strong></p>
+            <p>
+                Tap the <strong>green Currency button</strong> at the bottom left.
+                Hold a banknote in front of the camera – the app will identify the denomination
+                and announce it out loud.
+            </p>
+
+            <p><strong>🆘 Emergency Mode</strong></p>
+            <p>
+                <strong>Press and hold</strong> the red Emergency button for 2 seconds.
+                An alarm will sound, your location will be captured, and
+                your emergency contacts will be notified that you need help.
+                Tap <strong>"Cancel Emergency"</strong> to deactivate.
+            </p>
+
+            <p><strong>🎤 Voice Commands</strong></p>
+            <p>
+                While detecting, you can say <strong>"detect currency"</strong> to switch modes.
+                Double-tap anywhere to stop or change your target object.
+            </p>
+
+            <p class="guide-highlight">
+                Double tap anywhere on this screen to return home.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let lastTap = 0;
+
+        // Double tap to go home
+        document.getElementById('guide-container').addEventListener('click', () => {
+            const now = Date.now();
+            if (now - lastTap < 300) {
+                window.location.href = 'index.html';
+            }
+            lastTap = now;
+        });
+
+        // Voice guidance on load
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!('speechSynthesis' in window)) return;
+
+            const text = `
+        Welcome to VocalPath, your AI-powered vision assistant.
+        
+        Object Detection: Tap Start Detection on the home screen. 
+        Speak the object you want to find, like chair, bottle, or person.
+        Point your camera around. The app will guide you with voice: left, right, forward, 
+        and tell you how many steps away the target is.
+        
+        Currency Detection: Tap the green Currency button at the bottom left.
+        Hold a banknote in front of the camera to identify the denomination.
+        
+        Emergency Mode: Press and hold the red Emergency button for 2 seconds.
+        An alarm will sound, your location will be shared, and your emergency contacts will be notified.
+        Tap Cancel Emergency to deactivate.
+        
+        Voice Commands: While detecting, say detect currency to switch modes.
+        Double-tap anywhere to stop or change your target.
+        
+        To return to the home screen, double tap anywhere on this screen.
+      `;
+
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.rate = 0.85;
+            speech.volume = 1;
+            speechSynthesis.speak(speech);
+        });
+
+        // Stop speech when leaving the page
+        window.addEventListener('beforeunload', () => {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+            }
+        });
+
+        // Also stop when page becomes hidden (e.g., switching tabs)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && 'speechSynthesis' in window) {
+                speechSynthesis.cancel();
+            }
+        });
+
+        // Stop when navigating away via links
+        window.addEventListener('pagehide', () => {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+            }
+        });
+    </script>
+</body>
+
+</html>
