@@ -119,7 +119,6 @@ const CLASS_HEIGHT_M = {
   "stop sign": 2.1,
 };
 
-// Focal length in pixels (rough heuristic for typical phone rear camera).
 // You can later calibrate this per device for better absolute accuracy.
 const FOCAL_LENGTH_PX = 900;
 
