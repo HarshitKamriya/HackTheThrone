@@ -5,7 +5,6 @@ let yoloSession = null;
 const YOLO_MODEL_URL = "models/yolov8n.onnx"; // Place YOLOv8n.onnx here
 const YOLO_INPUT_SIZE = 640;
 
-// COCO80 class list used by YOLOv8
 const COCO_CLASSES = [
   "person",
   "bicycle",
