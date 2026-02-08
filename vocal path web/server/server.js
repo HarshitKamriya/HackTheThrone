@@ -25,7 +25,6 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Vocal Path server running" });
 });
 
-// All other routes serve index.html (for SPA-style navigation if extended)
 app.get("*", (req, res) => {
   res.sendFile(path.join(CLIENT_BUILD_PATH, "index.html"));
 });
